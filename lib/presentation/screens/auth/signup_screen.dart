@@ -2,6 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:messenger_app_cubit/core/common/custom_button.dart';
 import 'package:messenger_app_cubit/core/common/custom_text_field.dart';
+import 'package:messenger_app_cubit/data/repositories/auth_repository.dart';
+import 'package:messenger_app_cubit/data/services/service_locator.dart';
 import 'package:messenger_app_cubit/presentation/screens/auth/login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -89,30 +91,30 @@ class _SignupScreenState extends State<SignupScreen> {
 
 
 
-  // Future<void> handleSignUp() async {
-  //   FocusScope.of(context).unfocus();
-  //   if ( _formKey.currentState?.validate() ?? false){ 
-  //     try {
-  //         await getIt<AuthCubit>().signUp( 
-  //         fullName: nameController.text,
-  //         username: usernameController.text,
-  //         email: emailController.text,
-  //         phoneNumber: phoneController.text,
-  //         password: passwordController.text
-  //         );
-  //     } catch (e) {
-  //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
-  //        Text(e.toString(),
-  //        ),
-  //       ),
-  //     );
+  Future<void> handleSignUp() async {
+    FocusScope.of(context).unfocus();
+    if ( _formKey.currentState?.validate() ?? false){ 
+      try {
+          await getIt<AuthRepository>().signUp( 
+          fullName: nameController.text,
+          username: usernameController.text,
+          email: emailController.text,
+          phoneNumber: phoneController.text,
+          password: passwordController.text
+          );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:
+         Text(e.toString(),
+         ),
+        ),
+      );
 
         
-  //     }
-  //   } else {
-  //     print("form validation failed");
-  //   }
-  // }
+      }
+    } else {
+      print("form validation failed");
+    }
+  }
  
 
 
@@ -199,10 +201,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
                 SizedBox(height: 30),
                 CustomButton(
-                  onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    if (_formKey.currentState?.validate() ?? false) {}
-                  },
+                  onPressed: handleSignUp,
                   text: "Create an account",
                 ),
                 SizedBox(height: 20),

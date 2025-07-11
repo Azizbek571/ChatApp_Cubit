@@ -1,10 +1,6 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:messenger_app_cubit/config/theme/app_theme.dart';
 import 'package:messenger_app_cubit/data/services/service_locator.dart';
-import 'package:messenger_app_cubit/firebase_options.dart';
-
-
 import 'package:messenger_app_cubit/presentation/screens/auth/login_screen.dart';
 import 'package:messenger_app_cubit/router/app_router.dart';
 

@@ -4,28 +4,23 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:messenger_app_cubit/data/repositories/auth_repository.dart';
+import 'package:messenger_app_cubit/data/repositories/contact_repository.dart';
 import 'package:messenger_app_cubit/firebase_options.dart';
 import 'package:messenger_app_cubit/logic/cubits/auth/auth_cubit.dart';
 import 'package:messenger_app_cubit/router/app_router.dart';
 
 final getIt = GetIt.instance;
 
-Future<void> setupServiceLocator()async {
+Future<void> setupServiceLocator() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp( 
-    options: DefaultFirebaseOptions.currentPlatform,
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  getIt.registerLazySingleton(() => AppRouter());
+  getIt.registerLazySingleton<FirebaseFirestore>(
+    () => FirebaseFirestore.instance,
   );
-
-
-
-  getIt.registerLazySingleton(()=> AppRouter());
-  getIt.registerLazySingleton<FirebaseFirestore>(()=> FirebaseFirestore.instance);
-  getIt.registerLazySingleton<FirebaseAuth>(()=> FirebaseAuth.instance);
-  getIt.registerLazySingleton(()=> AuthRepository());
-  getIt.registerFactory(()=> AuthCubit(authrepository: AuthRepository()));
-
-
-
+  getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+  getIt.registerLazySingleton(() => AuthRepository());
+  getIt.registerLazySingleton(() => ContactRepository());
+  getIt.registerFactory(() => AuthCubit(authrepository: AuthRepository()));
 }
-

@@ -20,6 +20,19 @@ class AuthRepository extends BaseRepositories {
         "".trim(),
       );
 
+      final emailExists = await checkEmailExists(email);
+   if (emailExists) {
+    throw "An account with the same email already exists";
+     
+   }
+      final phoneNumberExists = await checkPhoneExists(formattedPhoneNumber);
+   if (phoneNumberExists) {
+    throw "An account with the same phone already exists";
+     
+   }
+
+
+
       final UserCredential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
@@ -41,6 +54,41 @@ class AuthRepository extends BaseRepositories {
       rethrow;
     }
   }
+
+
+  Future<bool>checkEmailExists( String email)async{
+      try {
+        final methods = await auth.fetchSignInMethodsForEmail(email);
+        return methods.isNotEmpty; 
+
+      } catch (e) {
+          print("Error checking email: $email");
+          return false;
+      }
+  }
+
+
+
+
+  Future<bool>checkPhoneExists( String phoneNumber)async{
+      try {
+       final formattedPhoneNumber = phoneNumber.replaceAll(
+        RegExp(r'\s+'),
+        "".trim(),
+      );
+         final querySnapshot = await firestore.collection("users").where("phoneNumber", isEqualTo: formattedPhoneNumber)
+         .get();
+
+         return querySnapshot.docs.isNotEmpty;
+
+      } catch (e) {
+          print("Error checking email: $e");
+          return false;
+      }
+  }
+
+
+
 
   Future<UserModel> signIn({
     required String email,

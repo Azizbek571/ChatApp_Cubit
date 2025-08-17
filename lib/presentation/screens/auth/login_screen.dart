@@ -1,15 +1,5 @@
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:messenger_app_cubit/core/common/custom_button.dart';
-import 'package:messenger_app_cubit/core/common/custom_text_field.dart';
-import 'package:messenger_app_cubit/core/utils/ui_utils.dart';
-import 'package:messenger_app_cubit/data/services/service_locator.dart';
-import 'package:messenger_app_cubit/home/home_screen.dart';
-import 'package:messenger_app_cubit/logic/cubits/auth/auth_cubit.dart';
-import 'package:messenger_app_cubit/logic/cubits/auth/auth_state.dart';
-import 'package:messenger_app_cubit/presentation/screens/auth/signup_screen.dart';
-import 'package:messenger_app_cubit/router/app_router.dart';
+
+import '../../../config/exports.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
